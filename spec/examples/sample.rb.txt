@@ -1,0 +1,24 @@
+class Sample
+  extend ::Dry::Initializer
+
+  param :alpha
+  param :base, proc(&:to_s), default: -> { "Belong to us" }, comment: "All!"
+
+  # @!attribute [r] account
+  #   @return [SomeType] Very some stuff
+  param :account, as: :user, optional: true
+
+  option :login, proc(&:to_s), as: :username
+  option :password, type: ->(v) { v.to_s }, reader: :private
+  option :meaningless, comment: "You know that is that stuff yeah"
+  option :commentful, comment: "Original comment"
+  option :topsecret, reader: false
+end
+
+class InheritedSample < Sample
+  param :alpha, optional: true
+  param :omega, optional: true
+  option :commentful, comment: "Changed comment"
+  option :meaningless, default: -> { true }
+  option :useless, optional: true
+end
